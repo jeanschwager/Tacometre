@@ -38,15 +38,15 @@
             border-radius: 50%;
             background: radial-gradient(circle, #1a1a1a 0%, #000 70%);
             border: 8px solid #333;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
         }
         .gauge-center {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 20px;
-            height: 20px;
+            width: 40px;
+            height: 40px;
             background: #ff0000;
             border-radius: 50%;
             z-index: 3;
@@ -60,7 +60,7 @@
             height: 160px;
             background: linear-gradient(to top, #ff0000, #ffff00);
             transform-origin: bottom center;
-            transform: translateX(-50%) rotate(90.0deg);
+            transform: translateX(-50%) rotate(-30.0deg);
             border-radius: 3px 3px 0 0;
             z-index: 2;
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
@@ -73,7 +73,15 @@
             top: 0;
             left: 0;
         }
- 
+        .mark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 3px;
+            height: 30px;
+            background: #fff;
+            transform-origin: bottom center;
+        }
         .number {
             position: absolute;
             color: #fff;
@@ -98,14 +106,17 @@
             <div class="needle"></div>
             <div class="gauge-center"></div>
         </div>
-        <div class="value">4</div>
+        <div class="value">5</div>
     </div>
 
     <script>
-        // Créer les graduations
+        // Créer les graduations (0 à 15)
         const marksContainer = document.getElementById('marks');
-        for (let i = 0; i <= 15; i++) {
-            const angle = -90 + (i * 22.5);
+        const maxValue = 15;
+        const anglePerUnit = 180 / maxValue; // 12° par unité
+
+        for (let i = 0; i <= maxValue; i++) {
+            const angle = -90 + (i * anglePerUnit);
             const mark = document.createElement('div');
             mark.className = 'mark';
             mark.style.transform = `translateX(-50%) rotate(${angle}deg)`;
@@ -115,12 +126,12 @@
             const number = document.createElement('div');
             number.className = 'number';
             number.textContent = i;
-            const radius = 180;
+            const radius = 140;
             const radian = (angle) * Math.PI / 180;
             const x = 200 + radius * Math.cos(radian);
             const y = 200 + radius * Math.sin(radian);
-            number.style.left = x - 2 + 'px';
-            number.style.top = y - 8 + 'px';
+            number.style.left = x - 15 + 'px';
+            number.style.top = y - 15 + 'px';
             marksContainer.appendChild(number);
         }
     </script>
