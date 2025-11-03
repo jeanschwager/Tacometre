@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TACOMETRE</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        .title {
+            color: #fff;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            letter-spacing: 5px;
+        }
+        .gauge {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+        }
+        .gauge-bg {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, #1a1a1a 0%, #000 70%);
+            border: 8px solid #333;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+        .gauge-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #ff0000;
+            border-radius: 50%;
+            z-index: 3;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+        }
+        .needle {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            width: 6px;
+            height: 160px;
+            background: linear-gradient(to top, #ff0000, #ffff00);
+            transform-origin: bottom center;
+            transform: translateX(-50%) rotate(90.0deg);
+            border-radius: 3px 3px 0 0;
+            z-index: 2;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            transition: transform 1s ease-out;
+        }
+        .marks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+ 
+        .number {
+            position: absolute;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .value {
+            color: #ff0000;
+            font-size: 72px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">TACOMETRE</div>
+        <div class="gauge">
+            <div class="gauge-bg"></div>
+            <div class="marks" id="marks"></div>
+            <div class="needle"></div>
+            <div class="gauge-center"></div>
+        </div>
+        <div class="value">4</div>
+    </div>
+
+    <script>
+        // Créer les graduations
+        const marksContainer = document.getElementById('marks');
+        for (let i = 0; i <= 15; i++) {
+            const angle = -90 + (i * 22.5);
+            const mark = document.createElement('div');
+            mark.className = 'mark';
+            mark.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+            marksContainer.appendChild(mark);
+
+            // Ajouter les numéros
+            const number = document.createElement('div');
+            number.className = 'number';
+            number.textContent = i;
+            const radius = 180;
+            const radian = (angle) * Math.PI / 180;
+            const x = 200 + radius * Math.cos(radian);
+            const y = 200 + radius * Math.sin(radian);
+            number.style.left = x - 2 + 'px';
+            number.style.top = y - 8 + 'px';
+            marksContainer.appendChild(number);
+        }
+    </script>
+</body>
+</html>
